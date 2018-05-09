@@ -3,6 +3,7 @@ cosmetic:
 
 content:
     for-real data import from various mymaps repos
+    store multiple branches of one location in the same file or one file per?
     per-location metadata:
         formalize recommender of location (hannah, lisa etc)
         add whether I've visited or not
