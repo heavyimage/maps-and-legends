@@ -21,12 +21,29 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://maps-and-legends.heavyimage.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: heavyimage
 github_username:  heavyimage
+collections:
+  waypoints:
+    output: true
+    permalink: /place/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: waypoints
+    values:
+      layout: waypoint-detail
+
+# leaflet
+map_debug: False
+leafletstyle: 'Hydda_Full'
+
+home_lat: 40.78
+home_lon: -73.96
+home_zoom: 11
 
 # Build settings
 markdown: kramdown
 theme: minima
-plugins:
-  - jekyll-feed
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

@@ -1,0 +1,29 @@
+cosmetic:
+    fullscreen map!
+
+content:
+    for-real data import
+    formalize recommender
+    whether I've visited or not
+    incorporate London / nyc / upstate NYC onto this map!
+    categorize restaurants!
+    size based on essentialness?
+    tours through nyc?
+    red caboose (is this just an old kmz file?!)
+
+
+what to do on detail pages:
+    use places API
+                    figure out how to pull in POI metadata
+    pull out quotes nice and big?
+    display {{content}}
+
+input methods:
+    easy way to add more locations, perhaps via binscript
+
+cbbs:
+    RSS feed of recent locations (last_modified_at sucks!)
+    ways to add more complex features (walks?) https://leafletjs.com/examples/geojson/
+    add mobile support: Mobile: https://leafletjs.com/examples/mobile/
+
+add to README https://github.com/lvoogdt/Leaflet.awesome-markers

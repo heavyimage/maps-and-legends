@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<div class="home">
+    <h1 class="page-heading">{{ page.title }}</h1>
+    <h4 class="page-heading">{{ page.description }}</h4>
+
+		<div id="map" style="height: 600px;" >
+				{% include leaflet.html %}
+		</div>
+
+		<script>
+				L.marker([{{ page.latlng[0] }}, {{ page.latlng[1] }}]).addTo(map)
+						.bindPopup("<strong>{{ page.title | escape }}</strong><br>{{ page.description | escape }}")
+						.openPopup();
+		</script>
+
+
+</div>
