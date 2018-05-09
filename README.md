@@ -14,16 +14,16 @@ This site is an example of using jekyll to drive map visualizations; I created i
 ## How to use
 * Create `_waypoints` directory
 * Add `thinkcoffee1.md` and with the following contents:
-
-    ---
-    title: "Think Coffee"
-    description: >-
-      Think Coffee is a great coffee shop!
-    latlng: [40.728338,-73.995286]
-    zoom: 12
-    layer: coffee
-    ---
-
+```
+---
+title: "Think Coffee"
+description: >-
+    Think Coffee is a great coffee shop!
+latlng: [40.728338,-73.995286]
+zoom: 12
+layer: coffee
+---
+```
 * Lather, rinse, repeat.
 
 You can also use my import script in `bin/` to help bulk import a kmz file from mymaps.
