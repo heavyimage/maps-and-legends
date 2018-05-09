@@ -18,7 +18,8 @@ This site is an example of using jekyll to drive map visualizations; I created i
 title: "Think Coffee"
 description: >-
     Think Coffee is a great coffee shop!
-latlng: [40.728338,-73.995286]
+latlng:
+  - 40.728338,-73.995286
 zoom: 12
 layer: coffee
 ---
