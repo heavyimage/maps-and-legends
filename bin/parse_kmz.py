@@ -20,14 +20,20 @@ class Place(object):
             layer = "coffee"
         elif layer == unicode("board game cafes"):
             layer = "boardgamecafes"
-
-
-
         self.layer = layer
 
+        pair = self.placemark_to_coords(placemark)
+        self.coords = [pair]
+
+    def placemark_to_coords(self, placemark):
         # because OF COURSE google maps kml stores things lon, lat not lat lon
         lon, lat, alt = unicode(placemark.Point.coordinates).strip().split("," )
-        self.coords = "%s,%s" % (lat, lon)
+        pair = "%s,%s" % (lat, lon)
+        return pair
+
+    def add_coord(self, placemark):
+        pair = self.placemark_to_coords(placemark)
+        self.coords.append(pair)
 
     def __unicode__(self):
         return "(%s) %s (%s)" % (self.layer, self.name, self.description)
@@ -46,18 +52,18 @@ class Place(object):
         return os.path.join(output_dir, filename)
 
     def bake(self):
-
         output_path = self.get_output_path()
 
-        lines = [u'---\n',
-                 u'title: "%s"\n' % self.name,
-                 u'description: >-\n  %s\n' % self.description,
-                 u'latlng: [%s]\n' % self.coords,
-                 u'zoom: 12\n',
-                 u'layer: %s\n' % self.layer,
-                 u'---\n']
         with codecs.open(output_path, "w", encoding="utf-8") as f:
-            f.writelines(lines)
+            f.write(u'---\n')
+            f.write(u'title: "%s"\n' % self.name)
+            f.write(u'description: >-\n  %s\n' % self.description)
+            f.write(u'latlng:\n')
+            for coord in self.coords:
+                f.write(u'  - %s\n' % coord)
+            f.write(u'zoom: 12\n')
+            f.write(u'layer: %s\n' % self.layer)
+            f.write(u'---\n')
 
 
 kmz = ZipFile(sys.argv[1], 'r')
@@ -69,7 +75,12 @@ places = []
 for folder in folders:
     print folder.name
     for pm in folder.Placemark:
-        places.append(Place(pm, folder.name))
+        place = Place(pm, folder.name)
+        previous = next((p for p in places if p.get_output_path() == place.get_output_path()), None)
+        if previous:
+            previous.add_coord(pm)
+        else:
+            places.append(place)
 
 # Check that there aren't any collisions
 collisions = []

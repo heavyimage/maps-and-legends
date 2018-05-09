@@ -89,10 +89,21 @@
 
 		var default_tile = basemap.{{site.leafletstyle}};
 
-		var map = L.map('map', { 
+		var map = L.map('map', {
 						'layers': [default_tile, layers['restaurants']['layer']],
 						{% if page.latlng %}
-								'center': [{{ page.latlng[0] }}, {{ page.latlng[1] }}],
+								{% assign latsum = 0 %}
+								{% assign lngsum = 0 %}
+								{% for coord in page.latlng %}
+										{% assign chunks = coord | split: ',' %}
+										{% assign latsum = latsum | plus: chunks[0] %}
+										{% assign lngsum = lngsum | plus: chunks[1] %}
+								{% endfor %}
+								{% assign size = page.latlng | size %}
+								{% assign latsum = latsum | divided_by: size %}
+								{% assign lngsum = lngsum | divided_by: size %}
+
+								'center': [{{ latsum }},{{ lngsum }}],
 								'zoom': {{ page.zoom }}
 						{% else %}
 								'center': [{{ site.home_lat }}, {{ site.home_lon }}],

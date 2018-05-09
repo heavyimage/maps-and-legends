@@ -11,9 +11,7 @@ layout: default
 		</div>
 
 		<script>
-				L.marker([{{ page.latlng[0] }}, {{ page.latlng[1] }}]).addTo(map)
-						.bindPopup("<strong>{{ page.title | escape }}</strong><br>{{ page.description | escape }}")
-						.openPopup();
+				{%- include waypoint_to_js.html content=page target="map" -%}
 		</script>
 
 
