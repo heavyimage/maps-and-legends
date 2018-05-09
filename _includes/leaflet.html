@@ -142,4 +142,9 @@
 				map.on('click', onMapClick);
 		{% endif %}
 
+		$(window).on("resize", function() {
+				    $("#map").height($(window).height() *.85).width($(window).width() * .85);
+						    map.invalidateSize();
+		}).trigger("resize");
+
 </script>
