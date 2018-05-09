@@ -1,5 +1,7 @@
 ## Maps and Legends
 
+![Screenshot](screenshot.png)
+
 This site is an example of using jekyll to drive map visualizations; I created it to get my personal map data out of google's clutches and into text files I can access with UNIX tools the way god intended.
 
 ## Features
