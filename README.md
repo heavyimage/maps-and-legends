@@ -7,9 +7,26 @@ This site is an example of using jekyll to drive map visualizations; I created i
 ## Features
 * Use Jekyll collections for each location
 * Use leaflet for map integration
-* Easily import data from mymaps.google.com (export to kmz and then run through included python script; see `bin` directory)
+* Easily import data from mymaps.google.com
 * Use leaflet awesome-markers for colorful icons
 * Use marker-clusters / featuregroup.subgroup for automatic and sensible clustering
+
+## How to use
+* Create `_waypoints` directory
+* Add `thinkcoffee1.md` and with the following contents:
+
+    ---
+    title: "Think Coffee"
+    description: >-
+      Think Coffee is a great coffee shop!
+    latlng: [40.728338,-73.995286]
+    zoom: 12
+    layer: coffee
+    ---
+
+* Lather, rinse, repeat.
+
+You can also use my import script in `bin/` to help bulk import a kmz file from mymaps.
 
 ## TODO
 See `TODO`
