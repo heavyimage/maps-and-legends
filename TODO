@@ -1,8 +1,15 @@
 cosmetic:
     fullscreen map!
 
+
+auto fit bounds to selection of points:
+    var group = new L.featureGroup([marker1, marker2, marker3]);
+    map.fitBounds(group.getBounds());
+
 content:
+    brookyln strategist!
     for-real data import from various mymaps repos
+        fix script to import spaces as underscores!
     store multiple branches of one location in the same file or one file per?
     per-location metadata:
         formalize recommender of location (hannah, lisa etc)
