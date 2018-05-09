@@ -27,6 +27,7 @@ Generate kml file from database
     whenever we build, use liquidt o create a servable kml file for others to import
 
 cbbs:
+    rather than hard code the overlays, drive this from the jekyll config
     RSS feed of recent locations (last_modified_at sucks!)
     ways to add more complex features (walks / hikes?) https://leafletjs.com/examples/geojson/
     add mobile support: Mobile: https://leafletjs.com/examples/mobile/
