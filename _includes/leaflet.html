@@ -1,8 +1,8 @@
 <div id="map" class="leafmap"></div>
 
 <script>
-		var viirs = 'VIIRS_SNPP_CorrectedReflectance_TrueColor';
 
+		// Map tilesets
 		var basemap = {
 				'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						'attribution': '&copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
@@ -14,135 +14,69 @@
 						'minZoom': 2,
 						'maxZoom': 18
 				}),
-				'Carto': L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/' + '{% if include.c_layer %}{{ include.c_layer }}{% else %}dark_all{% endif %}' + '/{z}/{x}/{y}.png', {
-						'attribution': '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>, &copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
-						'minZoom': 2,
-						'maxZoom': 19
-				}),
 				'Esri': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 						'attribution': 'Tiles &copy; Esri, &copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
 						'minZoom': 3,
 						'maxZoom': 18
 				}),
-				'Gibs': L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/' + viirs + '/default/' + '{{ page.date| date: "%Y-%m-%d" }}' + '/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg', {
-						'attribution': 'Maps &copy; <a href="http://earthdata.nasa.gov">Gibs</a>, &copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
-						'minZoom': 3,
-						'maxZoom': 9
-				})
 		};
 
+		// create parentgroup (for clustering)
 		parentGroup = L.markerClusterGroup({disableClusteringAtZoom: 14}); // Could be any other Layer Group type.
 
-		// layers
+		// create layers from _config
 		layers = {
-				'restaurants': {
+		{% for layer in site.layers %}
+				'{{ layer.name }}' : {
 						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'utensils', prefix: 'fa', markerColor: 'red'}),
-						'name': "Restaurants",
+						'icon': L.AwesomeMarkers.icon({icon:'{{ layer.icon }}', prefix: 'fa', markerColor: '{{ layer.color }}'}),
 				},
-				'bars': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'beer', prefix: 'fa', markerColor: 'cadetblue'}),
-						'name': "Bars",
-				},
-				'pois': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'star', prefix: 'fa', markerColor: 'darkpurple'}),
-						'name': "POIs",
-				},
-				'coffee': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'coffee', prefix: 'fa', markerColor: 'black'}),
-						'name': "Coffee Shops",
-				},
-				'bagels': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'smile', prefix: 'fa', markerColor: 'beige'}),
-						'name': "Bagels",
-				},
-				'parks': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'tree', prefix: 'fa', markerColor: 'green'}),
-						'name': "Parks / Trails",
-				},
-				'museums': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'gem', prefix: 'fa', markerColor: 'gray'}),
-						'name': "Museums",
-				},
-				'stores': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'dollar-sign', prefix: 'fa', markerColor: 'purple'}),
-						'name': "Stores",
-				},
-				'dessert': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'birthday-cake', prefix: 'fa', markerColor: 'pink'}),
-						'name': "Dessert",
-				},
-				'boardgamecafes': {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon: 'chess-rook', prefix: 'fa', markerColor: 'orange'}),
-						'name': "Board Game Cafes",
-				},
+		{% endfor %}
 		};
 
-		var default_tile = basemap.{{site.leafletstyle}};
-
+		// Create map object with all layers enabled
 		var map = L.map('map', {
-						'layers': [default_tile, layers['restaurants']['layer']],
-						{% if page.latlng %}
-								{% assign latsum = 0 %}
-								{% assign lngsum = 0 %}
-								{% for coord in page.latlng %}
-										{% assign chunks = coord | split: ',' %}
-										{% assign latsum = latsum | plus: chunks[0] %}
-										{% assign lngsum = lngsum | plus: chunks[1] %}
-								{% endfor %}
-								{% assign size = page.latlng | size %}
-								{% assign latsum = latsum | divided_by: size %}
-								{% assign lngsum = lngsum | divided_by: size %}
+						'layers': [basemap.{{site.leafletstyle}},
+						{%- for layer in site.layers -%}
+						layers['{{ layer.name }}']['layer'], 
+						{%- endfor -%}
+						],
+				{% if page.latlng %}
+						{% assign latsum = 0 %}
+						{% assign lngsum = 0 %}
+						{% for coord in page.latlng %}
+								{% assign chunks = coord | split: ',' %}
+								{% assign latsum = latsum | plus: chunks[0] %}
+								{% assign lngsum = lngsum | plus: chunks[1] %}
+						{% endfor %}
+						{% assign size = page.latlng | size %}
+						{% assign latsum = latsum | divided_by: size %}
+						{% assign lngsum = lngsum | divided_by: size %}
 
-								'center': [{{ latsum }},{{ lngsum }}],
-								'zoom': {{ page.zoom }}
-						{% else %}
-								'center': [{{ site.home_lat }}, {{ site.home_lon }}],
-								'zoom': {{ site.home_zoom }}
-						{% endif %}
+						'center': [{{ latsum }},{{ lngsum }}],
+						'zoom': {{ page.zoom }}
+				{% else %}
+						'center': [{{ site.home_lat }}, {{ site.home_lon }}],
+						'zoom': {{ site.home_zoom }}
+				{% endif %}
 		});
 		parentGroup.addTo(map);
 
-		var baseLayers = {"Default": default_tile};
+		// Build overlays
+		var overlays = {
+		{% for layer in site.layers %}
+				'{{ layer.title }}': layers['{{ layer.name }}']['layer'],
+		{%- endfor %}
+		};
 
-		var overlays = {}
-		overlays[layers['restaurants']['name']] = layers['restaurants']['layer'],
-		overlays[layers['bars']['name']] = layers['bars']['layer'],
-		overlays[layers['coffee']['name']] = layers['coffee']['layer'],
-		overlays[layers['bagels']['name']] = layers['bagels']['layer'],
-		overlays[layers['stores']['name']] = layers['stores']['layer'],
-		overlays[layers['pois']['name']] = layers['pois']['layer'],
-		overlays[layers['parks']['name']] = layers['parks']['layer'],
-		overlays[layers['dessert']['name']] = layers['dessert']['layer'],
-		overlays[layers['museums']['name']] = layers['museums']['layer'],
-		overlays[layers['boardgamecafes']['name']] = layers['boardgamecafes']['layer'],
+		// Set up the layers system
+		L.control.layers(
+						basemap,
+						overlays,
+						{collapsed: false}).addTo(map);
 
-		L.control.layers(baseLayers, overlays, {collapsed: false}).addTo(map)
-
-
-		{% if site.map_debug %}
-				var popup = L.popup();
-
-				function onMapClick(e) {
-						popup
-								.setLatLng(e.latlng)
-								.setContent("You clicked the map at " + e.latlng.toString())
-								.openOn(map);
-				}
-
-				map.on('click', onMapClick);
-		{% endif %}
-
-		$(window).on("resize", function() {
+		// Make sure to resize the map based on the size of the window!
+		$(window).on("resize", function(){
 				    $("#map").height($(window).height() *.85).width($(window).width() * .85);
 						    map.invalidateSize();
 		}).trigger("resize");

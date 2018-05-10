@@ -41,6 +41,49 @@ home_lat: 40.78
 home_lon: -73.96
 home_zoom: 11
 
+# Layers
+layers:
+  - name: "restaurants"
+    icon: "utensils"
+    color: "red"
+    title: "Restaurants"
+  - name: "bars"
+    icon: "beer"
+    color: "cadetblue"
+    title: "Bars"
+  - name: "pois"
+    icon: "star"
+    color: "darkpurple"
+    title: "POIs"
+  - name: "coffee"
+    icon: "coffee"
+    color: "black"
+    title: "Coffee Shops"
+  - name: "bagels"
+    icon: "smile"
+    color: "beige"
+    title: "Bagels"
+  - name: "parks"
+    icon: "tree"
+    color: "green"
+    title: "Parks / Trails"
+  - name: "museums"
+    icon: "gem"
+    color: "gray"
+    title: "Museums"
+  - name: "stores"
+    icon: "dollar-sign"
+    color: "purple"
+    title: "Stores"
+  - name: "dessert"
+    icon: "birthday-cake"
+    color: "pink"
+    title: "Dessert"
+  - name: "boardgamecafes"
+    icon: "chess-rook"
+    color: "orange"
+    title: "Board Game Cafes"
+
 # Build settings
 markdown: kramdown
 theme: minima
