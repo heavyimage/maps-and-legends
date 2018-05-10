@@ -14,9 +14,9 @@ layout: default
 
 		<!-- Add waypoints! -->
 		<script>
-		{% for item in site.waypoints %}
+		{%- for item in site.waypoints -%}
 				{%- include waypoint_to_js.html content=item target="" -%}
-		{% endfor %}
+		{%- endfor -%}
 		</script>
 
 </div>
