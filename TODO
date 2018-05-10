@@ -1,7 +1,3 @@
-Generate kml file from database
-    whenever we build, use liquidt o create a servable kml file for others to import
-    rename xml --> kml
-
 what to do on detail pages:
     (change waypoints to locations)
     cache fq business id on .md file

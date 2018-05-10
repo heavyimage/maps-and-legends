@@ -1,0 +1,50 @@
+---
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>{{ site.title }}</name>
+    <description>{{ site.description }}</description>
+    {% for layer in site.layers %}
+        {%- assign color = layer.color -%}
+        {%- assign name = layer.name -%}
+        {%- assign icon = layer.icon -%}
+        <Style id="{{ name }}">
+        <IconStyle>
+            <color>{{ color }}</color>
+            <scale>1</scale>
+            <Icon>
+                <href>https://raw.githubusercontent.com/encharm/Font-Awesome-SVG-PNG/master/white/png/32/{{ icon }}.png</href>
+            </Icon>
+        </IconStyle>
+        <BalloonStyle>
+            <text><![CDATA[<h3>$[name]</h3><br><p>$[description]</p>]]></text>
+        </BalloonStyle>
+        </Style>
+    {% endfor %}
+    {%- assign layer_names = site.layers | map: "name" -%}
+    {%- assign layer_titles = site.layers | map: "title" -%}
+    {% for layer in layer_names %}
+        <Folder>
+          <name>{{ layer_titles[forloop.index0] }}</name>
+            {%- for loc in site.waypoints -%}
+                {%- if loc.layer == layer -%}
+                {%- for coord in loc.latlng -%}
+                    {%- assign coord_chunks = coord | split: "," %}
+                    <Placemark>
+                        <name>{{ loc.title | escape }} </name>
+                        <description>{{ loc.description | escape }}</description>
+                        <styleUrl>#{{ layer }}</styleUrl>
+                        <Point>
+                            <coordinates>
+                                {{ coord_chunks[1] }},{{ coord_chunks[0] }},{{ coord_chunks[2] }}
+                            </coordinates>
+                        </Point>
+                    </Placemark>
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </Folder>
+    {% endfor %}
+  </Document>
+</kml>
