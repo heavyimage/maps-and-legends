@@ -1,41 +1,77 @@
-cosmetic:
-    fullscreen map!
+Generate kml file from database
+    whenever we build, use liquidt o create a servable kml file for others to import
+    rename xml --> kml
+
+what to do on detail pages:
+    (change waypoints to locations)
+    cache fq business id on .md file
+    turn off rendering of waypoints
+    code:
+        // ZOMG: https://gist.github.com/bsudekum/6063237
+        $.ajax({
+        type: "GET",
+        dataType: "jsonp",
+        cache: false,
+        url: 'https://api.foursquare.com/v2/venues/search?ll=' + 40.78 + ',' + -73.96 + '&limit=30&client_id=3ODULPRCZOZL43JVOBNUBAUPXD5MXKBX24DOUZYNO0V3SEUL&client_secret=MBM0IB0YS1JZB2QLZ3WZDHSZAC10JOO0JY4VGDOF0IU3E5AH&v=20180509',
+        success: function(data){
+        console.log(data)
+        var base = data.response.venues
+
+        $.each(base, function(index){
+            var url = base[index].url;
+            var name = base[index].name;
+            console.log(url)
+            console.log(name)
+            })
+        }
+        });
+    overlay pops up:
+        make overlay
+        show:
+            name
+            my review
+            # of locations
+            recommender
+            display {{content}}
+        foursquare!
+            FS review
+            photos!
+            phone number
+            website
+            description
+            (or missing FS business ID)
 
 
-auto fit bounds to selection of points:
-    var group = new L.featureGroup([marker1, marker2, marker3]);
-    map.fitBounds(group.getBounds());
+center to where you are now:
+    navigator.geolocation.getCurrentPosition(function(location) {
+    console.log(location.coords.latitude);
+    console.log(location.coords.longitude);
+        console.log(location.coords.accuracy);
+        });
 
 content:
-    brookyln strategist!
+    brookyln strategist / hanah sushi / best bits of central park!
     for-real data import from various mymaps repos
         fix script to import spaces as underscores!
-    store multiple branches of one location in the same file or one file per?
     per-location metadata:
         formalize recommender of location (hannah, lisa etc)
         add whether I've visited or not
         date added...?
         categorize restaurants!
-    size based on essentialness?
+        size based on essentialness?
 
-what to do on detail pages:
-    use places API:
-        figure out how to pull in POI metadata
-    should I even show a map?  if so -- disable layers / clustering
-    pull out quotes nice and big?
-    display {{content}}
-
-input methods:
-    easy way to add new locations, perhaps via binscript:
+input methods tool:
+    easy way to add new locations, via binscript:
         * find lat / lon
         * scrape from google?
 
-Generate kml file from database
-    whenever we build, use liquidt o create a servable kml file for others to import
 
 cbbs:
-    rather than hard code the overlays, drive this from the jekyll config
+    Way to generically talk about a place api?
     RSS feed of recent locations (last_modified_at sucks!)
     ways to add more complex features (walks / hikes?) https://leafletjs.com/examples/geojson/
     add mobile support: Mobile: https://leafletjs.com/examples/mobile/
-
+    auto fit bounds to selection of points:
+        var group = new L.featureGroup([marker1, marker2, marker3]);
+        map.fitBounds(group.getBounds());
+        equidistant between NY / Montral but zoom was wrong!
