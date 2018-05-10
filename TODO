@@ -61,12 +61,16 @@ input methods tool:
         * find lat / lon
         * scrape from google?
 
-
 cbbs:
     Way to generically talk about a place api?
     RSS feed of recent locations (last_modified_at sucks!)
     ways to add more complex features (walks / hikes?) https://leafletjs.com/examples/geojson/
     add mobile support: Mobile: https://leafletjs.com/examples/mobile/
+    kml export:
+        include {{ content }} or other MD?
+    kmz import script:
+        support kmls as well
+        make layer remapping a bit easier to understand...
     auto fit bounds to selection of points:
         var group = new L.featureGroup([marker1, marker2, marker3]);
         map.fitBounds(group.getBounds());
