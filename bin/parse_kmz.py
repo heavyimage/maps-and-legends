@@ -47,7 +47,9 @@ class Place(object):
             raise RuntimeError("Can't find _waypoints dir; re-run from jekyll "
                     "site root!")
 
-        base = ''.join(ch.lower() for ch in self.name if ch.isalnum())
+        base = ''.join(ch.lower() for ch in self.name
+                if ch.isalnum() or ch == " ")
+        base = base.replace(" ", "_")
         filename = "%s.md" % base
         return os.path.join(output_dir, filename)
 
