@@ -23,15 +23,7 @@ twitter_username: heavyimage
 github_username:  heavyimage
 collections:
   locations:
-    output: true
-    permalink: /place/:path/
-
-defaults:
-  - scope:
-      path: ""
-      type: locations
-    values:
-      layout: location-detail
+    output: False
 
 # leaflet
 map_debug: False
@@ -86,7 +78,6 @@ layers:
 
 # Build settings
 markdown: kramdown
-theme: minima
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

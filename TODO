@@ -1,3 +1,10 @@
+https://github.com/gregallensworth/L.Control.jQueryDialog/blob/master/example/index.html
+
+restore, about / kml download links!
+{ site.description | escape }}
+Curated by [Jesse Spielman](http://heavyimage.com), with plenty of suggestions from friends!
+
+
 what to do on detail pages:
     cache fq business id on .md file
     turn off rendering of locations

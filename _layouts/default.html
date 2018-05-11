@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-  {%- include head.html -%}
+		{%- include head.html -%}
+		<body>
 
-  <body>
+				<!-- a plain ol' map -->
+				<div id="map"></div>
 
-    {%- include header.html -%}
+				<!-- Download button -->
+				<div class="modaldialog" id="dialog-download" title="Download KML">
+						<p>Download the contents of this site as a .kml file <a href="/feed.kml" target="_blank">here</a>.</p>
+				</div>
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </main>
+				<!-- About button -->
+				<div class="modaldialog" id="dialog-about" title="About">
+						<p>{{ site.description | escape }}</p>
+						<p>Curated by <a href="http://heavyimage.com">Jesse Spielman</a>, with plenty of suggestions from friends!</p>
+				</div>
 
-    {%- include footer.html -%}
-
-  </body>
-
+		</body>
+		<!-- Add locations! -->
+		<script>
+				{%- include leaflet.html -%}
+				{%- for item in site.locations -%}
+						{%- include location_to_js.html content=item -%}
+				{%- endfor -%}
+		</script>
 </html>

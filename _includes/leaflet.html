@@ -1,84 +1,103 @@
-<div id="map" class="leafmap"></div>
+// Map tilesets
+var basemap = {
+		'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				'attribution': '&copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
+				'minZoom': 2,
+				'maxZoom': 19
+		}),
+		'Hydda_Full': L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+				'attribution': 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				'minZoom': 2,
+				'maxZoom': 18
+		}),
+		'Esri': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+				'attribution': 'Tiles &copy; Esri, &copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
+				'minZoom': 3,
+				'maxZoom': 18
+		}),
+};
 
-<script>
+// create parentgroup (for clustering)
+parentGroup = L.markerClusterGroup({disableClusteringAtZoom: 14}); // Could be any other Layer Group type.
 
-		// Map tilesets
-		var basemap = {
-				'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						'attribution': '&copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
-						'minZoom': 2,
-						'maxZoom': 19
-				}),
-				'Hydda_Full': L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
-						'attribution': 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-						'minZoom': 2,
-						'maxZoom': 18
-				}),
-				'Esri': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-						'attribution': 'Tiles &copy; Esri, &copy; <a href="https://osmlab.github.io/attribution-mark/copyright/?name={{ site.title }}">OpenStreetMap</a> contributors',
-						'minZoom': 3,
-						'maxZoom': 18
-				}),
-		};
+// create layers from _config
+var layers = {
+{% for layer in site.layers %}
+		'{{ layer.name }}' : {
+				'layer': L.featureGroup.subGroup(parentGroup),
+				'icon': L.AwesomeMarkers.icon({icon:'{{ layer.icon }}', prefix: 'fa', markerColor: '{{ layer.color }}'}),
+		},
+{% endfor %}
+};
 
-		// create parentgroup (for clustering)
-		parentGroup = L.markerClusterGroup({disableClusteringAtZoom: 14}); // Could be any other Layer Group type.
+// Create map object with all layers enabled
+var map = L.map('map', {
+				'layers': [basemap.{{site.leafletstyle}},
+				{%- for layer in site.layers -%}
+				layers['{{ layer.name }}']['layer'], 
+				{%- endfor -%}
+				],
+		{% if page.latlng %}
+				{% assign latsum = 0 %}
+				{% assign lngsum = 0 %}
+				{% for coord in page.latlng %}
+						{% assign chunks = coord | split: ',' %}
+						{% assign latsum = latsum | plus: chunks[0] %}
+						{% assign lngsum = lngsum | plus: chunks[1] %}
+				{% endfor %}
+				{% assign size = page.latlng | size %}
+				{% assign latsum = latsum | divided_by: size %}
+				{% assign lngsum = lngsum | divided_by: size %}
 
-		// create layers from _config
-		layers = {
-		{% for layer in site.layers %}
-				'{{ layer.name }}' : {
-						'layer': L.featureGroup.subGroup(parentGroup),
-						'icon': L.AwesomeMarkers.icon({icon:'{{ layer.icon }}', prefix: 'fa', markerColor: '{{ layer.color }}'}),
-				},
-		{% endfor %}
-		};
+				'center': [{{ latsum }},{{ lngsum }}],
+				'zoom': {{ page.zoom }}
+		{% else %}
+				'center': [{{ site.home_lat }}, {{ site.home_lon }}],
+				'zoom': {{ site.home_zoom }}
+		{% endif %}
+});
 
-		// Create map object with all layers enabled
-		var map = L.map('map', {
-						'layers': [basemap.{{site.leafletstyle}},
-						{%- for layer in site.layers -%}
-						layers['{{ layer.name }}']['layer'], 
-						{%- endfor -%}
-						],
-				{% if page.latlng %}
-						{% assign latsum = 0 %}
-						{% assign lngsum = 0 %}
-						{% for coord in page.latlng %}
-								{% assign chunks = coord | split: ',' %}
-								{% assign latsum = latsum | plus: chunks[0] %}
-								{% assign lngsum = lngsum | plus: chunks[1] %}
-						{% endfor %}
-						{% assign size = page.latlng | size %}
-						{% assign latsum = latsum | divided_by: size %}
-						{% assign lngsum = lngsum | divided_by: size %}
+parentGroup.addTo(map);
 
-						'center': [{{ latsum }},{{ lngsum }}],
-						'zoom': {{ page.zoom }}
-				{% else %}
-						'center': [{{ site.home_lat }}, {{ site.home_lon }}],
-						'zoom': {{ site.home_zoom }}
-				{% endif %}
-		});
-		parentGroup.addTo(map);
+// our dialogs; one is modal and the other is not and that's okay
+$('#dialog-download').dialog({
+		modal: true,
+		autoOpen: false,
+		closeOnEsc: true,
+		draggable: false,
+		width: 500,
+});
 
-		// Build overlays
-		var overlays = {
+$('#dialog-about').dialog({
+		modal: true,
+		autoOpen: false,
+		closeOnEsc: true,
+		draggable: false,
+		width: 500,
+});
+
+// the map controls to toggle those dialogs
+new L.Control.jQueryDialog({
+		dialogId: 'dialog-download',
+		tooltip: "Download KML",
+		iconClass: 'fa fa-download',
+}).addTo(map);
+new L.Control.jQueryDialog({
+		dialogId: 'dialog-about',
+		tooltip: "About",
+		iconClass: 'fa fa-question'
+}).addTo(map);
+
+// Build overlays
+var overlays = {
 		{% for layer in site.layers %}
 				'{{ layer.title }}': layers['{{ layer.name }}']['layer'],
 		{%- endfor %}
-		};
+};
 
-		// Set up the layers system
-		L.control.layers(
-						basemap,
-						overlays,
-						{collapsed: false}).addTo(map);
+// Set up the layers system
+L.control.layers(
+				basemap,
+				overlays,
+				{collapsed: false}).addTo(map);
 
-		// Make sure to resize the map based on the size of the window!
-		$(window).on("resize", function(){
-				    $("#map").height($(window).height() *.85).width($(window).width() * .85);
-						    map.invalidateSize();
-		}).trigger("resize");
-
-</script>

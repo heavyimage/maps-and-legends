@@ -36,3 +36,4 @@ See `TODO`
 * [Leaflet.awesome-markers](https://github.com/lvoogdt/Leaflet.awesome-markers)
 * [Leaflet.marker-clusters](https://github.com/Leaflet/Leaflet.markercluster)
 * [Leaflet.FeatureGroup.SubGroup](https://github.com/ghybs/Leaflet.FeatureGroup.SubGroup)
+* [Leaflet + JQuery UI](https://github.com/gregallensworth/L.Control.BootstrapModal)

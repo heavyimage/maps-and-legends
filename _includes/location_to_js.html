@@ -6,15 +6,13 @@
 {% else %}
 		{% assign desc = include.content.description | escape | prepend: "<br>" %}
 {% endif %}
-{% if include.target == "map" %}
-		{% assign my_target = "map" %}
-{% else %}
-		{% assign my_target = layer | prepend: "layers['" | append: "']['layer']" %}
-{% endif %}
+
+{% assign my_target = layer | prepend: "layers['" | append: "']['layer']" %}
+
 {%- for coord in include.content.latlng %}
 		L.marker(
 				[{{ coord }}],
 				{'icon': layers['{{ layer }}']['icon']})
-				.bindPopup("<a href='{{ include.content.url }}'><strong>{{ header }}</strong></a>{{ desc }}").addTo({{ my_target }});
+				.bindPopup("<strong>{{ header }}</strong>{{ desc }}").addTo({{ my_target }});
 {%- endfor -%}
 

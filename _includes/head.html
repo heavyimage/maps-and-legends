@@ -2,11 +2,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{%- seo -%}
-		<link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
 		{%- feed_meta -%}
 		{%- if jekyll.environment == 'production' and site.google_analytics -%}
-		{%- include google-analytics.html -%}
+				{%- include google-analytics.html -%}
 		{%- endif -%}
 
 		<!-- Leaflet! -->
@@ -30,7 +28,15 @@
 		<!-- After Leaflet script -->
 		<script src="https://unpkg.com/leaflet.featuregroup.subgroup@1.0.2/dist/leaflet.featuregroup.subgroup.js"></script>
 
-		<!-- JQuery -->
+		<!-- JQuery + UI-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
 
+		<!-- main css file -->
+		<link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+
+		<!-- Leaflet + JQuery UI-->
+		<link rel="stylesheet" href="{{ "/assets/css/leaflet-jquerydialog.css" | relative_url }}">
+		<script src="{{ "/assets/js/leaflet-jquerydialog.js" | relative_url }}"></script>
 </head>
