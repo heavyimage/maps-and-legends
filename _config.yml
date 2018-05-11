@@ -23,7 +23,14 @@ twitter_username: heavyimage
 github_username:  heavyimage
 collections:
   locations:
-    output: False
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: locations
+    values:
+      layout: location
 
 # leaflet
 map_debug: False

@@ -101,3 +101,13 @@ L.control.layers(
 				overlays,
 				{collapsed: false}).addTo(map);
 
+function ajaxpopup(e, url) {
+		var popup = e.target.getPopup();
+		$.get(url).done(function(data) {
+				// Data maniuplation here!
+				popup.setContent(data);
+				popup.update();
+		})
+
+}
+

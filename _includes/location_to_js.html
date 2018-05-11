@@ -13,7 +13,10 @@
 		L.marker(
 				[{{ coord }}],
 				{'icon': layers['{{ layer }}']['icon']})
-				.bindPopup("<strong>{{ header }}</strong>{{ desc }}").addTo({{ my_target }});
+				.bindPopup("Loading...")
+				.on('click', function(e){
+						ajaxpopup(e, '{{ include.content.url }}')})
+				.addTo({{ my_target }});
 {%- endfor -%}
 
 
