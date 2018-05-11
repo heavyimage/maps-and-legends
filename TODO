@@ -9,6 +9,7 @@ what to do on detail pages:
     cache fq business id on .md file
     turn off rendering of locations
     code:
+
         // ZOMG: https://gist.github.com/bsudekum/6063237
         $.ajax({
         type: "GET",
@@ -27,6 +28,7 @@ what to do on detail pages:
             })
         }
         });
+
     overlay pops up:
         make overlay
         show:
