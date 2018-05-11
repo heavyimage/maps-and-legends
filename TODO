@@ -46,9 +46,14 @@ center to where you are now:
         });
 
 content:
-    brookyln strategist / hanah sushi / best bits of central park!
+    fix script to import spaces as underscores!
     for-real data import from various mymaps repos
-        fix script to import spaces as underscores!
+        london
+        upstate ny
+        all of nyc
+            brookyln strategist / hanah sushi / best bits of central park!
+
+MD improvements:
     per-location metadata:
         formalize recommender of location (hannah, lisa etc)
         add whether I've visited or not
@@ -56,21 +61,21 @@ content:
         categorize restaurants!
         size based on essentialness?
 
+kmz import script:
+    support kmls as well
+    make layer remapping a bit easier to understand...
+
 input methods tool:
     easy way to add new locations, via binscript:
         * find lat / lon
         * scrape from google?
 
 cbbs:
-    Way to generically talk about a place api?
     RSS feed of recent locations (last_modified_at sucks!)
     ways to add more complex features (walks / hikes?) https://leafletjs.com/examples/geojson/
     add mobile support: Mobile: https://leafletjs.com/examples/mobile/
     kml export:
         include {{ content }} or other MD?
-    kmz import script:
-        support kmls as well
-        make layer remapping a bit easier to understand...
     auto fit bounds to selection of points:
         var group = new L.featureGroup([marker1, marker2, marker3]);
         map.fitBounds(group.getBounds());
