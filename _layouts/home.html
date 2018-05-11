@@ -12,10 +12,10 @@ layout: default
 				{% include leaflet.html %}
 		</div>
 
-		<!-- Add waypoints! -->
+		<!-- Add locations! -->
 		<script>
-		{%- for item in site.waypoints -%}
-				{%- include waypoint_to_js.html content=item target="" -%}
+		{%- for item in site.locations -%}
+				{%- include location_to_js.html content=item target="" -%}
 		{%- endfor -%}
 		</script>
 

@@ -22,16 +22,16 @@ url: "http://maps-and-legends.heavyimage.com" # the base hostname & protocol for
 twitter_username: heavyimage
 github_username:  heavyimage
 collections:
-  waypoints:
+  locations:
     output: true
     permalink: /place/:path/
 
 defaults:
   - scope:
       path: ""
-      type: waypoints
+      type: locations
     values:
-      layout: waypoint-detail
+      layout: location-detail
 
 # leaflet
 map_debug: False

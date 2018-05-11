@@ -27,7 +27,7 @@
     {% for layer in layer_names %}
         <Folder>
           <name>{{ layer_titles[forloop.index0] }}</name>
-            {%- for loc in site.waypoints -%}
+            {%- for loc in site.locations -%}
                 {%- if loc.layer == layer -%}
                 {%- for coord in loc.latlng -%}
                     {%- assign coord_chunks = coord | split: "," %}

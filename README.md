@@ -12,7 +12,7 @@ This site is an example of using jekyll to drive map visualizations; I created i
 * Use marker-clusters / featuregroup.subgroup for automatic and sensible clustering
 
 ## How to use
-* Create `_waypoints/thinkcoffee1.md` with the following contents:
+* Create `_locations/thinkcoffee1.md` with the following contents:
 ```
 ---
 title: "Think Coffee"
@@ -24,7 +24,7 @@ zoom: 12
 layer: coffee
 ---
 ```
-* Add more waypoints!
+* Add more locations!
 
 You can also use my import script in `bin/` to help bulk import a kmz file from mymaps.
 

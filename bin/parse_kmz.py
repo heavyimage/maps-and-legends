@@ -42,9 +42,9 @@ class Place(object):
         return unicode(self).encode('utf-8')
 
     def get_output_path(self):
-        output_dir = os.path.join(os.getcwd(), "_waypoints")
+        output_dir = os.path.join(os.getcwd(), "_locations")
         if not os.path.exists(output_dir):
-            raise RuntimeError("Can't find _waypoints dir; re-run from jekyll "
+            raise RuntimeError("Can't find _locations dir; re-run from jekyll "
                     "site root!")
 
         base = ''.join(ch.lower() for ch in self.name

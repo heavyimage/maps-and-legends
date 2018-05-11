@@ -1,7 +1,6 @@
 what to do on detail pages:
-    (change waypoints to locations)
     cache fq business id on .md file
-    turn off rendering of waypoints
+    turn off rendering of locations
     code:
         // ZOMG: https://gist.github.com/bsudekum/6063237
         $.ajax({
