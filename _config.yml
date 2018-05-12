@@ -93,3 +93,6 @@ exclude:
    - Gemfile
    - Gemfile.lock
    - screenshot.png
+   - cache.p
+   - bin
+   - README.md
