@@ -101,13 +101,53 @@ L.control.layers(
 				overlays,
 				{collapsed: false}).addTo(map);
 
-function ajaxpopup(e, url) {
-		var popup = e.target.getPopup();
-		$.get(url).done(function(data) {
-				// Data maniuplation here!
-				popup.setContent(data);
-				popup.update();
-		})
 
+function ajaxpopup(e, meta) {
+		var popup = e.target.getPopup();
+
+		var name = meta['title'];
+		var coord = meta['coord'];
+		var markdown_url = meta['md_url'];
+
+		var section1_contents = "";
+		var section2_contents = "";
+
+		function update_contents(){
+				var html = "<div>" + section1_contents + "</div><div>" + section2_contents + "</div>";
+				popup.setContent(html);
+				popup.update();
+		}
+
+		// fetch markdown info
+		$.ajax({
+				url: markdown_url,
+				type: 'GET',
+				success: function(data){
+						section1_contents = data;
+						update_contents();
+				},
+				error: function(xhr, textStatus, errorThrown) {
+						alert("NOES");
+				}
+		});
+
+		// fetch metadata from flask server
+		metadata_url = "http://localhost:5000/q="+name+"&ll="+coord;
+		$.ajax({
+				url: metadata_url,
+				type: 'GET',
+				success: function(data){
+						section2_contents = data;
+						update_contents();
+				},
+				error: function(xhr, textStatus, errorThrown) {
+						console.log(textStatus);
+						console.log(errorThrown);
+						if (errorThrown == ""){
+								errorThrown = "Can't reach Metadata server!";
+						}
+						section2_contents = "[<strong style='color: red'>Error: " + errorThrown + "</strong>]";
+				}
+		});
 }
 
