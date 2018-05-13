@@ -59,7 +59,22 @@ var map = L.map('map', {
 
 parentGroup.addTo(map);
 
-// our dialogs; one is modal and the other is not and that's okay
+
+// Build overlays
+var overlays = {
+		{% for layer in site.layers %}
+				'{{ layer.title }}': layers['{{ layer.name }}']['layer'],
+		{%- endfor %}
+};
+
+// Set up the layers system
+L.control.layers(
+				basemap,
+				overlays,
+				{collapsed: false}).addTo(map);
+
+// Set up about / kml download popup dialogs
+
 $('#dialog-download').dialog({
 		modal: true,
 		autoOpen: false,
@@ -67,7 +82,6 @@ $('#dialog-download').dialog({
 		draggable: false,
 		width: 500,
 });
-
 $('#dialog-about').dialog({
 		modal: true,
 		autoOpen: false,
@@ -88,18 +102,6 @@ new L.Control.jQueryDialog({
 		iconClass: 'fa fa-question'
 }).addTo(map);
 
-// Build overlays
-var overlays = {
-		{% for layer in site.layers %}
-				'{{ layer.title }}': layers['{{ layer.name }}']['layer'],
-		{%- endfor %}
-};
-
-// Set up the layers system
-L.control.layers(
-				basemap,
-				overlays,
-				{collapsed: false}).addTo(map);
 
 
 function ajaxpopup(e, meta) {
