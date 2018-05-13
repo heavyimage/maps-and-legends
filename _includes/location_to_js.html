@@ -14,6 +14,7 @@
 				[{{ coord }}],
 				{'icon': layers['{{ layer }}']['icon']})
 				.bindPopup("<div id='section1'>Loading...</div><div id='section2'></div>")
+				.bindTooltip("{{ title }}")
 				.on('click', function(e){
 						data = {
 								'title': '{{ title | url_encode }}',
