@@ -1,6 +1,6 @@
 {% assign layer = include.content.layer %}
-{% assign header = include.content.title | escape %}
-{% assign header = include.content.title | escape %}
+{% assign title = include.content.title %}
+
 {% if include.content.description == empty %}
 		{% assign desc = '' %}
 {% else %}
@@ -13,9 +13,14 @@
 		L.marker(
 				[{{ coord }}],
 				{'icon': layers['{{ layer }}']['icon']})
-				.bindPopup("Loading...")
+				.bindPopup("<div id='section1'>Loading...</div><div id='section2'></div>")
 				.on('click', function(e){
-						ajaxpopup(e, '{{ include.content.url }}')})
+						data = {
+								'title': '{{ title | url_encode }}',
+								'coord': '{{ coord }}',
+								'md_url': '{{ include.content.url }}'
+						}
+						ajaxpopup(e, data)})
 				.addTo({{ my_target }});
 {%- endfor -%}
 
