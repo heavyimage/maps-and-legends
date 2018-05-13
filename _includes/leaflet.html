@@ -34,7 +34,7 @@ var layers = {
 var map = L.map('map', {
 				'layers': [basemap.{{site.leafletstyle}},
 				{%- for layer in site.layers -%}
-				layers['{{ layer.name }}']['layer'], 
+				layers['{{ layer.name }}']['layer'],
 				{%- endfor -%}
 				],
 		{% if page.latlng %}
