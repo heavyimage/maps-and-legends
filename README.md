@@ -28,6 +28,9 @@ layer: coffee
 
 You can also use my import script in `bin/` to help bulk import a kmz file from mymaps.
 
+### Cache server
+#### A note about pickle
+
 ## TODO
 See `TODO`
 
