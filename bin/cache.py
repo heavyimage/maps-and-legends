@@ -233,11 +233,6 @@ def get_metadata_from_details(details):
             options = [item['displayValue'] for item in group['items']]
             html += "<strong>Serves:</strong> %s<br>" % (", ".join(options))
 
-        # Take out?
-        elif name == "Dining Options":
-            options = [item['displayValue'] for item in group['items']]
-            html += "<strong>Options:</strong> %s<br>" % (", ".join(options))
-
     # web contact
     url = venue.get('url', {})
     twitter = venue.get('contact', {}).get('twitter', {})
