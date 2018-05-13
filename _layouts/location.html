@@ -1,5 +1,18 @@
 ---
 ---
-<strong>Title</strong>: {{ page.title }} <br>
-<strong>Description</strong>: {{ page.description }} <br>
-{{ page.content }}
+{% assign content = post.content | strip_newlines | strip %}
+
+<h4>{{page.title }}</h4><br>
+
+{% if page.description != "" and content != blank %}
+		<div class='markdown_result'>
+		{% if page.description != "" %}
+				<strong>Why Great:</strong> {{ page.description }} <br>
+		{% endif %}
+
+		{% if content == blank %}
+				<strong>More Notes:</strong>{{ content }} <br>
+		{% endif %}
+		</div>
+		<br>
+{% endif %}
