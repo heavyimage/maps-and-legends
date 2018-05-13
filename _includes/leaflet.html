@@ -111,11 +111,20 @@ function ajaxpopup(e, meta) {
 		var coord = meta['coord'];
 		var markdown_url = meta['md_url'];
 
-		var section1_contents = "";
-		var section2_contents = "";
+		var section1a = "Loading markdown...";
+		var section1b = "Loading metadata...";
+		var section2 = "<img class src='/assets/images/globeanim.gif'>";
 
-		function update_contents(){
-				var html = "<div>" + section1_contents + "</div><div>" + section2_contents + "</div>";
+		function update(){
+				var html = "<div class='Row'>" +
+												"<div class='Column textcol'>" +
+														section1a +
+														"<div class='metadata_result'>" + section1b + "</div>" +
+												"</div>" +
+												"<div class='Column photocol'>" +
+														"<div>" + section2 + "</div>" +
+												"</div>" +
+										"</div>"
 				popup.setContent(html);
 				popup.update();
 		}
@@ -125,8 +134,8 @@ function ajaxpopup(e, meta) {
 				url: markdown_url,
 				type: 'GET',
 				success: function(data){
-						section1_contents = data;
-						update_contents();
+						section1a = data;
+						update();
 				},
 				error: function(xhr, textStatus, errorThrown) {
 						alert("NOES");
@@ -137,10 +146,12 @@ function ajaxpopup(e, meta) {
 		metadata_url = "http://localhost:5000/q="+name+"&ll="+coord;
 		$.ajax({
 				url: metadata_url,
+				dataType: "json",
 				type: 'GET',
 				success: function(data){
-						section2_contents = data;
-						update_contents();
+						section1b = data['html'];
+						section2 = data['img'];
+						update();
 				},
 				error: function(xhr, textStatus, errorThrown) {
 						console.log(textStatus);
@@ -148,7 +159,7 @@ function ajaxpopup(e, meta) {
 						if (errorThrown == ""){
 								errorThrown = "Can't reach Metadata server!";
 						}
-						section2_contents = "[<strong style='color: red'>Error: " + errorThrown + "</strong>]";
+						section1b = "[<strong style='color: red'>Error: " + errorThrown + "</strong>]";
 				}
 		});
 }

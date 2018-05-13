@@ -15,6 +15,53 @@ div.ui-dialog {
 		opacity:0.75;
 }
 
-.modaldialog {
-		font-size: 11px;
+.Row {
+		width: 620px;
+		height: 300px;
 }
+
+.Column img {
+		display: block;
+		margin: 0 auto;
+}
+
+.Column h4 {
+		text-align: center;
+		padding: 10px;
+		margin: 0px;
+		background-color: orange;
+}
+
+.textcol {
+		width: 300px;
+		height: 300px;
+		position: absolute;
+		top: 15px;
+		left: 20px;
+		margin 0px;
+		padding 0px;
+		overflow: scroll;
+}
+
+.photocol {
+		width: 300px;
+		position: absolute;
+		top: 15px;
+		right: 20px;
+}
+
+.markdown_result {
+		background-color: #5db77e;
+		padding: 10px;
+}
+
+.metadata_result {
+		background-color: #ddd;
+		padding: 10px;
+}
+
+.leaflet-popup-content {
+		width:auto !important;
+}
+
+

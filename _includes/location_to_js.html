@@ -13,7 +13,7 @@
 		L.marker(
 				[{{ coord }}],
 				{'icon': layers['{{ layer }}']['icon']})
-				.bindPopup("<div id='section1'>Loading...</div><div id='section2'></div>")
+				.bindPopup("")
 				.bindTooltip("{{ title }}")
 				.on('click', function(e){
 						data = {
