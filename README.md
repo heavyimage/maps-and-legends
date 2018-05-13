@@ -29,6 +29,12 @@ layer: coffee
 You can also use my import script in `bin/` to help bulk import a kmz file from mymaps.
 
 ### Cache server
+* create secret.py with your foursquare API deets:
+    ```
+    CLIENT_ID = 'XXX'
+    CLIENT_SECRET = 'XXX'
+    ```
+
 #### A note about pickle
 
 ## TODO
