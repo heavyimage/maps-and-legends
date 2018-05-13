@@ -35,6 +35,7 @@ You can also use my import script in `bin/` to help bulk import a kmz file from 
 See `TODO`
 
 ## Credits
+* Ian Thompson for being a man, a myth, a legend.
 * [Starting point for Leaflet and Jekyll](https://robyremzy.github.io/blog/2016/leaflet-inside-a-post/)
 * [Leaflet.awesome-markers](https://github.com/lvoogdt/Leaflet.awesome-markers)
 * [Leaflet.marker-clusters](https://github.com/Leaflet/Leaflet.markercluster)
